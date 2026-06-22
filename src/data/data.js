@@ -219,16 +219,19 @@ export const contactData = {
       icon: "location",
       title: "Headquarters",
       text: "123 Global Trade Plaza, New York, NY 10001",
+      link: null,
     },
     {
       icon: "mail",
       title: "Email Us",
       text: "inquiries@exporthub.com",
+      link: null,
     },
     {
       icon: "phone",
       title: "Call / WhatsApp",
       text: "+1 (555) 123-4567",
+      link: null,
     },
   ],
 };
