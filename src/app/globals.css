@@ -1,26 +1,178 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f7f9fb;
+    --foreground: #191c1e;
+    --primary: #0f172a;
+    --secondary: #1e293b;
+    --tertiary: #10b981;
+    --surface: #ffffff;
+  }
+
+  body {
+    @apply bg-background text-text-primary font-sans text-body-md antialiased;
+  }
+
+  h1,
+  .h1 {
+    @apply text-display-lg font-sans font-bold text-primary tracking-tight mb-4;
+  }
+
+  h2,
+  .h2 {
+    @apply text-headline-lg font-sans font-semibold text-primary tracking-tight mb-3;
+  }
+
+  h3,
+  .h3 {
+    @apply text-headline-md font-sans font-semibold text-primary mb-2;
+  }
+
+  h4,
+  .h4 {
+    @apply text-headline-sm font-sans font-semibold text-primary mb-2;
+  }
+
+  h5,
+  .h5 {
+    @apply text-body-lg font-sans font-semibold text-primary mb-1;
+  }
+
+  h6,
+  .h6 {
+    @apply text-label-md font-sans font-semibold text-primary mb-1 uppercase tracking-wider;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.slick-track {
+  margin-left: unset !important;
+}
+
+@layer components {
+
+  /* Base button class with transition-all duration-200 ease-out */
+  .btn {
+    @apply inline-flex items-center justify-center font-sans font-semibold text-label-md rounded border border-transparent transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer;
+    padding: 0.75rem 1.5rem;
+  }
+
+  /* Hover state: 200ms ease-out, translate -1px, subtle shadow, light filter brightness */
+  .btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    @apply shadow-sm;
+    filter: brightness(105%);
+  }
+
+  /* Active state */
+  .btn:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  /* Button variants */
+  .button-primary {
+    @apply btn bg-primary text-white focus:ring-primary/50;
+  }
+
+  .button-secondary {
+    @apply btn bg-transparent border-primary/20 text-primary hover:bg-surface-low hover:border-primary focus:ring-primary/30;
+  }
+
+  .button-success {
+    @apply btn bg-tertiary text-white focus:ring-tertiary/50;
+  }
+
+  .inner-wrap {
+    @apply py-8 lg:py-16
+  }
+}
+
+/* Enable overflow visible on slick-list for categories slider to allow left margin bleed */
+.categories-slick-slider .slick-list {
+  overflow: visible !important;
+  margin-left: unset !important;
+}
+
+/* Ensure slides and inner elements stretch to full height */
+.categories-slick-slider .slick-track {
+  display: flex !important;
+}
+.categories-slick-slider .slick-slide {
+  height: auto !important;
+  display: flex !important;
+}
+.categories-slick-slider .slick-slide > div {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* Custom premium slick dots styling */
+.categories-slick-slider .slick-dots {
+  position: relative;
+  bottom: 0;
+  margin-top: 32px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Fix width and height of li containers to prevent horizontal layout shifting */
+.categories-slick-slider .slick-dots li {
+  width: 32px !important;
+  height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Button serves as the generous click target */
+.categories-slick-slider .slick-dots li button {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 0 !important;
+  /* hide default number text */
+}
+
+.categories-slick-slider .slick-dots li button::before {
+  display: none !important;
+  /* hide default dot character */
+}
+
+/* Visual dot rendered as a pseudo-element centered in the button */
+.categories-slick-slider .slick-dots li button::after {
+  content: "" !important;
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background-color: #cbd5e1;
+  /* Inactive light slate */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.categories-slick-slider .slick-dots li button:hover::after {
+  background-color: #94a3b8;
+  /* darker grey hover */
+}
+
+/* Active dot styling - visual dot becomes a 24px wide pill inside the stable 32px container */
+.categories-slick-slider .slick-dots li.slick-active button::after,
+.categories-slick-slider .slick-dots li button.slick-active-custom::after {
+  width: 24px;
+  background-color: #0f172a;
+  /* brand navy */
 }
