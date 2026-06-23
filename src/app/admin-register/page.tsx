@@ -145,7 +145,7 @@ export default function AdminRegisterPage() {
         {/* Footer link */}
         <div className="text-center mt-lg">
           <p className="font-body-sm text-body-sm text-secondary">
-            Protected by <span className="font-label-md text-label-md text-primary">ExportHub Security</span>
+            Protected by <span className="font-label-md text-label-md text-primary">BB Enterprise Security</span>
           </p>
         </div>
       </main>
