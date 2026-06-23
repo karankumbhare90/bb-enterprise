@@ -224,19 +224,19 @@ export default function AdminCategoriesClient({ initialCategories }: { initialCa
       {/* Filters & Views Row */}
       <div className="flex flex-col sm:flex-row justify-between items-center bg-surface-container-low p-sm rounded-lg mb-lg border border-outline-variant/30 gap-md">
         <div className="flex gap-2 w-full sm:w-auto">
-          <button 
+          <button
             onClick={() => setFilter("All")}
             className={`px-4 py-2 rounded-md font-label-md text-label-md flex-1 sm:flex-none transition-colors ${filter === "All" ? "bg-surface text-primary shadow-sm border border-outline-variant/50" : "text-secondary hover:bg-surface-container"}`}
           >
             All ({categories.length})
           </button>
-          <button 
+          <button
             onClick={() => setFilter("Active")}
             className={`px-4 py-2 rounded-md font-label-md text-label-md flex-1 sm:flex-none transition-colors ${filter === "Active" ? "bg-surface text-primary shadow-sm border border-outline-variant/50" : "text-secondary hover:bg-surface-container"}`}
           >
             Active
           </button>
-          <button 
+          <button
             onClick={() => setFilter("Draft")}
             className={`px-4 py-2 rounded-md font-label-md text-label-md flex-1 sm:flex-none transition-colors ${filter === "Draft" ? "bg-surface text-primary shadow-sm border border-outline-variant/50" : "text-secondary hover:bg-surface-container"}`}
           >
@@ -370,7 +370,8 @@ export default function AdminCategoriesClient({ initialCategories }: { initialCa
                           <MdCloudUpload className="text-[24px]" />
                         </div>
                         <p className="font-label-md text-label-md text-primary mb-1">Click to upload category thumbnail</p>
-                        <p className="font-body-sm text-body-sm text-secondary">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+                        <p className="font-body-sm text-body-sm text-secondary">SVG, PNG, JPG or GIF</p>
+                        <p className="text-xs text-secondary mt-2 font-medium bg-surface-container inline-block px-2 py-1 rounded">Recommended size: 800x400px (2:1 ratio), Max: 2MB</p>
                       </>
                     )}
                   </div>

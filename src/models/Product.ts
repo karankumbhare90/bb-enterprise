@@ -57,12 +57,14 @@ const ProductSchema = new mongoose.Schema(
       {
         name: { type: String, required: true },
         value: { type: String, required: true },
+        icon: { type: String },
       },
     ],
     packagingLogistics: [
       {
         name: { type: String, required: true },
         value: { type: String, required: true },
+        icon: { type: String },
       }
     ],
   },

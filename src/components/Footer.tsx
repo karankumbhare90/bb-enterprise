@@ -159,7 +159,7 @@ export default function Footer({ settings }: { settings?: any }) {
 
         <div className="pt-lg border-t border-outline-variant/20 flex justify-center items-center">
           <p className="text-body-sm text-text-secondary text-center">
-            © {new Date().getFullYear()} {settings?.title || "ExportHub Global"}. All rights reserved.
+            © {new Date().getFullYear()} {settings?.title || "BB Enterprise Global"}. All rights reserved.
           </p>
         </div>
 

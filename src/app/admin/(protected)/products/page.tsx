@@ -42,8 +42,8 @@ export default function AdminProductsPage() {
   const [moq, setMoq] = useState("");
   const [unit, setUnit] = useState("Units");
 
-  const [techParams, setTechParams] = useState([{ name: "", value: "" }]);
-  const [packagingParams, setPackagingParams] = useState([{ name: "", value: "" }]);
+  const [techParams, setTechParams] = useState([{ name: "", value: "", icon: "" }]);
+  const [packagingParams, setPackagingParams] = useState([{ name: "", value: "", icon: "" }]);
 
   const [existingImages, setExistingImages] = useState<any[]>([]);
   const [newImages, setNewImages] = useState<File[]>([]);
@@ -101,17 +101,17 @@ export default function AdminProductsPage() {
     }
   };
 
-  const handleAddTechParam = () => setTechParams([...techParams, { name: "", value: "" }]);
+  const handleAddTechParam = () => setTechParams([...techParams, { name: "", value: "", icon: "" }]);
   const handleRemoveTechParam = (idx: number) => setTechParams(techParams.filter((_, i) => i !== idx));
-  const handleTechParamChange = (idx: number, field: 'name' | 'value', val: string) => {
+  const handleTechParamChange = (idx: number, field: 'name' | 'value' | 'icon', val: string) => {
     const newParams = [...techParams];
     newParams[idx][field] = val;
     setTechParams(newParams);
   };
 
-  const handleAddPackParam = () => setPackagingParams([...packagingParams, { name: "", value: "" }]);
+  const handleAddPackParam = () => setPackagingParams([...packagingParams, { name: "", value: "", icon: "" }]);
   const handleRemovePackParam = (idx: number) => setPackagingParams(packagingParams.filter((_, i) => i !== idx));
-  const handlePackParamChange = (idx: number, field: 'name' | 'value', val: string) => {
+  const handlePackParamChange = (idx: number, field: 'name' | 'value' | 'icon', val: string) => {
     const newParams = [...packagingParams];
     newParams[idx][field] = val;
     setPackagingParams(newParams);
@@ -565,6 +565,7 @@ export default function AdminProductsPage() {
                         <option value="Units">Units</option>
                         <option value="Pallets">Pallets</option>
                         <option value="Tons">Tons</option>
+                        <option value="Kg">Kg</option>
                         <option value="Pieces">Pieces</option>
                       </select>
                     </div>
@@ -586,7 +587,27 @@ export default function AdminProductsPage() {
                   <div className="flex flex-col gap-sm">
                     {techParams.map((param, i) => (
                       <div key={i} className="flex gap-sm items-start group">
-                        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-sm">
+                        <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-sm">
+                          <select
+                            value={param.icon || ""}
+                            onChange={(e) => handleTechParamChange(i, 'icon', e.target.value)}
+                            className="col-span-1 bg-surface border border-outline-variant rounded-lg px-3 py-2 font-body-sm text-body-sm focus:outline-none focus:border-primary transition-all"
+                          >
+                            <option value="">No Icon</option>
+                            <option value="MdSettings">Settings</option>
+                            <option value="MdBuild">Build/Tools</option>
+                            <option value="MdElectricBolt">Power/Electric</option>
+                            <option value="MdScale">Weight</option>
+                            <option value="MdStraighten">Dimensions</option>
+                            <option value="MdLocalShipping">Shipping</option>
+                            <option value="MdInventory">Box/Inventory</option>
+                            <option value="MdTimer">Time/Speed</option>
+                            <option value="MdSecurity">Security/Shield</option>
+                            <option value="MdAcUnit">Cooling</option>
+                            <option value="MdWaterDrop">Liquid</option>
+                            <option value="MdThermostat">Temperature</option>
+                            <option value="MdMemory">Chip/Processor</option>
+                          </select>
                           <input
                             placeholder="Label (e.g. Spindle Motor)"
                             value={param.name}
@@ -630,7 +651,23 @@ export default function AdminProductsPage() {
                   <div className="flex flex-col gap-sm">
                     {packagingParams.map((param, i) => (
                       <div key={i} className="flex gap-sm items-start group">
-                        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-sm">
+                        <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-sm">
+                          <select
+                            value={param.icon || ""}
+                            onChange={(e) => handlePackParamChange(i, 'icon', e.target.value)}
+                            className="col-span-1 bg-surface border border-outline-variant rounded-lg px-3 py-2 font-body-sm text-body-sm focus:outline-none focus:border-primary transition-all"
+                          >
+                            <option value="">No Icon</option>
+                            <option value="MdLocalShipping">Truck/Shipping</option>
+                            <option value="MdInventory">Box/Package</option>
+                            <option value="MdTimer">Time/Duration</option>
+                            <option value="MdScale">Weight</option>
+                            <option value="MdStraighten">Dimensions</option>
+                            <option value="MdPublic">Global/Globe</option>
+                            <option value="MdDescription">Document/Paper</option>
+                            <option value="MdGavel">Legal/Customs</option>
+                            <option value="MdVerified">Verified/Secure</option>
+                          </select>
                           <input
                             placeholder="Label (e.g. Lead Time)"
                             value={param.name}
@@ -668,6 +705,7 @@ export default function AdminProductsPage() {
                     <div>
                       <h3 className="font-label-lg text-label-lg text-primary">Media Gallery</h3>
                       <p className="text-sm text-secondary mt-1">Product images and documents.</p>
+                      <p className="text-xs text-secondary mt-1 font-medium bg-surface-container inline-block px-2 py-1 rounded">Recommended size: 800x800px (1:1 ratio), Max: 2MB</p>
                     </div>
                     <input
                       type="file"
