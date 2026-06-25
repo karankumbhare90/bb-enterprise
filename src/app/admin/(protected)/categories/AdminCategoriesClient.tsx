@@ -12,10 +12,67 @@ import {
   MdImage,
   MdClose,
   MdCloudUpload,
-  MdDelete
+  MdDelete,
+  MdDragIndicator
 } from "react-icons/md";
 import { toast } from "react-hot-toast";
 import { useCategoryStore } from "@/store/categoryStore";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, rectSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+function SortableCategoryCard({ cat, idx, openEditModal, confirmDelete }: any) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: cat._id || cat.id });
+  
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 10 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`bg-surface border border-outline-variant/40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col h-full ${isDragging ? 'ring-2 ring-primary opacity-80' : ''}`}
+    >
+      <div className={`h-60 w-full relative overflow-hidden ${cat.image ? 'bg-surface-container' : 'bg-surface-container-high flex items-center justify-center'}`}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+        {cat.image ? (
+          <img alt={cat.name} src={cat.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        ) : (
+          <MdImage className="text-outline text-[48px] opacity-50 relative z-0" />
+        )}
+        <div className="absolute top-4 right-4 z-20 bg-black/30 p-1.5 rounded cursor-grab active:cursor-grabbing text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity" {...attributes} {...listeners} title="Drag to reorder">
+          <MdDragIndicator className="text-[20px]" />
+        </div>
+        <div className="absolute bottom-4 left-4 z-20 flex gap-2">
+          <span className={`${cat.status === 'Active'
+            ? 'bg-surface-variant text-on-tertiary-fixed-variant border-tertiary-fixed-dim/30'
+            : 'bg-surface-variant text-on-surface-variant border-outline-variant/50'
+            } font-label-sm text-label-sm px-2 py-1 rounded backdrop-blur-sm border`}>
+            {cat.status || "Active"}
+          </span>
+        </div>
+      </div>
+
+      <div className="p-lg flex-1 flex flex-col">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="font-headline-sm text-headline-sm text-primary">{cat.name}</h3>
+          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button onClick={() => openEditModal(cat)} className="text-secondary hover:text-primary transition-colors p-1.5 rounded hover:bg-surface-container" title="Edit">
+              <MdEdit className="text-[20px]" />
+            </button>
+            <button onClick={() => confirmDelete(cat._id || cat.id)} className="text-secondary hover:text-error transition-colors p-1.5 rounded hover:bg-error/10" title="Delete">
+              <MdDelete className="text-[20px]" />
+            </button>
+          </div>
+        </div>
+        <p className="font-body-sm text-body-sm text-secondary mb-4 line-clamp-2">{cat.description}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminCategoriesClient({ initialCategories }: { initialCategories: any[] }) {
   const queryClient = useQueryClient();
@@ -146,6 +203,43 @@ export default function AdminCategoriesClient({ initialCategories }: { initialCa
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = categories.findIndex((c: any) => (c._id || c.id) === active.id);
+      const newIndex = categories.findIndex((c: any) => (c._id || c.id) === over.id);
+      
+      const newCategories = arrayMove(categories, oldIndex, newIndex);
+      queryClient.setQueryData(["categories"], { success: true, data: newCategories });
+
+      try {
+        const orderedIds = newCategories.map((c: any) => c._id || c.id);
+        const res = await fetch("/api/categories/reorder", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderedIds })
+        });
+        const data = await res.json();
+        if (data.success) {
+          toast.success("Order updated successfully!");
+        } else {
+          toast.error("Failed to update order");
+          queryClient.invalidateQueries({ queryKey: ["categories"] });
+        }
+      } catch (e) {
+        toast.error("Error updating order");
+        queryClient.invalidateQueries({ queryKey: ["categories"] });
+      }
+    }
+  };
+
   const confirmDelete = (id: string) => {
     setCategoryToDelete(id);
     setIsDeleteModalOpen(true);
@@ -249,52 +343,33 @@ export default function AdminCategoriesClient({ initialCategories }: { initialCa
       {isLoading ? (
         <div className="flex items-center justify-center py-20 text-secondary">Loading...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
-          {filteredCategories.map((cat: any, idx: number) => (
-            <div
-              key={cat._id || cat.id}
-              className={`bg-surface border border-outline-variant/40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col h-full`}
-              style={{ animationDelay: `${idx * 100}ms` }}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+            <SortableContext 
+              items={filteredCategories.map((cat: any) => cat._id || cat.id)}
+              strategy={rectSortingStrategy}
             >
-              <div className={`h-60 w-full relative overflow-hidden ${cat.image ? 'bg-surface-container' : 'bg-surface-container-high flex items-center justify-center'}`}>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                {cat.image ? (
-                  <img alt={cat.name} src={cat.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                ) : (
-                  <MdImage className="text-outline text-[48px] opacity-50 relative z-0" />
-                )}
-                <div className="absolute bottom-4 left-4 z-20 flex gap-2">
-                  <span className={`${cat.status === 'Active'
-                    ? 'bg-surface-variant text-on-tertiary-fixed-variant border-tertiary-fixed-dim/30'
-                    : 'bg-surface-variant text-on-surface-variant border-outline-variant/50'
-                    } font-label-sm text-label-sm px-2 py-1 rounded backdrop-blur-sm border`}>
-                    {cat.status || "Active"}
-                  </span>
-                </div>
+              {filteredCategories.map((cat: any, idx: number) => (
+                <SortableCategoryCard 
+                  key={cat._id || cat.id} 
+                  cat={cat} 
+                  idx={idx} 
+                  openEditModal={openEditModal} 
+                  confirmDelete={confirmDelete} 
+                />
+              ))}
+            </SortableContext>
+            {filteredCategories.length === 0 && (
+              <div className="col-span-full py-xl text-center text-secondary">
+                No categories found matching your filter.
               </div>
-
-              <div className="p-lg flex-1 flex flex-col">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-headline-sm text-headline-sm text-primary">{cat.name}</h3>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => openEditModal(cat)} className="text-secondary hover:text-primary transition-colors p-1.5 rounded hover:bg-surface-container" title="Edit">
-                      <MdEdit className="text-[20px]" />
-                    </button>
-                    <button onClick={() => confirmDelete(cat._id || cat.id)} className="text-secondary hover:text-error transition-colors p-1.5 rounded hover:bg-error/10" title="Delete">
-                      <MdDelete className="text-[20px]" />
-                    </button>
-                  </div>
-                </div>
-                <p className="font-body-sm text-body-sm text-secondary mb-4 line-clamp-2">{cat.description}</p>
-              </div>
-            </div>
-          ))}
-          {filteredCategories.length === 0 && (
-            <div className="col-span-full py-xl text-center text-secondary">
-              No categories found matching your filter.
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        </DndContext>
       )}
 
       {/* Full Screen Modal for Add/Edit Category */}

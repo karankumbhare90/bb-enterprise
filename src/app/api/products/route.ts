@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
     const products = await Product.find(query)
       .populate("category", "name")
-      .sort({ createdAt: -1 });
+      .sort({ sortOrder: 1, createdAt: -1 });
     return NextResponse.json({ success: true, data: products });
   } catch (error) {
     console.error("GET Products Error:", error);

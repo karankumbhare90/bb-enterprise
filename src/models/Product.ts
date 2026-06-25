@@ -67,6 +67,10 @@ const ProductSchema = new mongoose.Schema(
         icon: { type: String },
       }
     ],
+    sortOrder: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

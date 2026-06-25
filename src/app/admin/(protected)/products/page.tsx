@@ -17,8 +17,68 @@ import {
   MdFormatItalic,
   MdFormatUnderlined,
   MdFormatListBulleted,
-  MdFormatListNumbered
+  MdFormatListNumbered,
+  MdDragIndicator
 } from "react-icons/md";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+function SortableProductRow({ product, idx, handleEditClick, handleDelete }: any) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: product._id });
+  
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 10 : 'auto',
+    position: 'relative' as 'relative',
+  };
+
+  return (
+    <tr
+      ref={setNodeRef}
+      style={style}
+      className={`border-b border-surface-container-highest hover:bg-surface-bright transition-colors group ${idx % 2 === 1 ? 'bg-surface-container-lowest' : ''} ${isDragging ? 'opacity-50 ring-2 ring-primary' : ''}`}
+    >
+      <td className="px-md py-sm w-10 text-center">
+        <div className="cursor-grab active:cursor-grabbing text-secondary hover:text-primary inline-flex p-1" {...attributes} {...listeners} title="Drag to reorder">
+          <MdDragIndicator className="text-[20px]" />
+        </div>
+      </td>
+      <td className="px-md py-sm">
+        <div className="w-12 h-12 rounded bg-surface-container border border-outline-variant overflow-hidden flex-shrink-0 flex items-center justify-center text-outline">
+          {product.images && product.images.length > 0 ? (
+            <img alt={product.name} src={product.images[0].url} className="w-full h-full object-cover" />
+          ) : (
+            <MdImage className="text-[24px]" />
+          )}
+        </div>
+      </td>
+      <td className="px-md py-sm font-medium">{product.name}</td>
+      <td className="hidden xl:table-cell px-md py-sm text-on-surface-variant">{product.category?.name || '-'}</td>
+      <td className="hidden xl:table-cell px-md py-sm">${product.minPrice} - ${product.maxPrice}</td>
+      <td className="hidden xl:table-cell px-md py-sm">{product.moq} {product.unit}</td>
+      <td className="px-md py-sm text-right">
+        <div className="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={() => handleEditClick(product)}
+            className="p-xs text-secondary hover:text-primary transition-colors rounded hover:bg-surface-container"
+            title="Edit"
+          >
+            <MdEdit className="text-[20px]" />
+          </button>
+          <button
+            onClick={() => handleDelete(product._id)}
+            className="p-xs text-secondary hover:text-error transition-colors rounded hover:bg-error-container"
+            title="Delete"
+          >
+            <MdDelete className="text-[20px]" />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+}
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -63,6 +123,41 @@ export default function AdminProductsPage() {
       if (data.success) setProducts(data.data);
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = products.findIndex((p: any) => p._id === active.id);
+      const newIndex = products.findIndex((p: any) => p._id === over.id);
+      
+      const newProducts = arrayMove(products, oldIndex, newIndex);
+      setProducts(newProducts);
+
+      try {
+        const orderedIds = newProducts.map((p: any) => p._id);
+        const res = await fetch("/api/products/reorder", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderedIds })
+        });
+        const data = await res.json();
+        if (!data.success) {
+          alert("Failed to update order");
+          fetchProducts();
+        }
+      } catch (e) {
+        alert("Error updating order");
+        fetchProducts();
+      }
     }
   };
 
@@ -336,62 +431,38 @@ export default function AdminProductsPage() {
 
         {/* Data Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr>
-                <th className="px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap w-24">Image</th>
-                <th className="px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">Product Name</th>
-                <th className="hidden xl:table-cell px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">Category</th>
-                <th className="hidden xl:table-cell px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">Price (USD)</th>
-                <th className="hidden xl:table-cell px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">MOQ</th>
-                <th className="px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="font-body-sm text-body-sm text-on-surface">
-              {filteredProducts.length === 0 ? (
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <table className="w-full text-left border-collapse">
+              <thead>
                 <tr>
-                  <td colSpan={6} className="text-center py-6 text-on-surface-variant">No products found.</td>
+                  <th className="px-md py-sm border-b-2 border-primary-fixed-dim bg-surface-container-low w-10 text-center text-primary font-label-md">Sort</th>
+                  <th className="px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap w-24">Image</th>
+                  <th className="px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">Product Name</th>
+                  <th className="hidden xl:table-cell px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">Category</th>
+                  <th className="hidden xl:table-cell px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">Price (USD)</th>
+                  <th className="hidden xl:table-cell px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap">MOQ</th>
+                  <th className="px-md py-sm font-label-md text-label-md text-primary border-b-2 border-primary-fixed-dim bg-surface-container-low whitespace-nowrap text-right">Actions</th>
                 </tr>
-              ) : filteredProducts.map((product, idx) => (
-                <tr
-                  key={product._id}
-                  className={`border-b border-surface-container-highest hover:bg-surface-bright transition-colors group ${idx % 2 === 1 ? 'bg-surface-container-lowest' : ''}`}
-                >
-                  <td className="px-md py-sm">
-                    <div className="w-12 h-12 rounded bg-surface-container border border-outline-variant overflow-hidden flex-shrink-0 flex items-center justify-center text-outline">
-                      {product.images && product.images.length > 0 ? (
-                        <img alt={product.name} src={product.images[0].url} className="w-full h-full object-cover" />
-                      ) : (
-                        <MdImage className="text-[24px]" />
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-md py-sm font-medium">{product.name}</td>
-                  <td className="hidden xl:table-cell px-md py-sm text-on-surface-variant">{product.category?.name || '-'}</td>
-                  <td className="hidden xl:table-cell px-md py-sm">${product.minPrice} - ${product.maxPrice}</td>
-                  <td className="hidden xl:table-cell px-md py-sm">{product.moq} {product.unit}</td>
-                  <td className="px-md py-sm text-right">
-                    <div className="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button
-                        onClick={() => handleEditClick(product)}
-                        className="p-xs text-secondary hover:text-primary transition-colors rounded hover:bg-surface-container"
-                        title="Edit"
-                      >
-                        <MdEdit className="text-[20px]" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(product._id)}
-                        className="p-xs text-secondary hover:text-error transition-colors rounded hover:bg-error-container"
-                        title="Delete"
-                      >
-                        <MdDelete className="text-[20px]" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <SortableContext items={filteredProducts.map(p => p._id)} strategy={verticalListSortingStrategy}>
+                <tbody className="font-body-sm text-body-sm text-on-surface">
+                  {filteredProducts.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="text-center py-6 text-on-surface-variant">No products found.</td>
+                    </tr>
+                  ) : filteredProducts.map((product, idx) => (
+                    <SortableProductRow
+                      key={product._id}
+                      product={product}
+                      idx={idx}
+                      handleEditClick={handleEditClick}
+                      handleDelete={handleDelete}
+                    />
+                  ))}
+                </tbody>
+              </SortableContext>
+            </table>
+          </DndContext>
         </div>
       </div>
 

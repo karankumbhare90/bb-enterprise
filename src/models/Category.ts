@@ -30,6 +30,10 @@ const CategorySchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+    sortOrder: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
