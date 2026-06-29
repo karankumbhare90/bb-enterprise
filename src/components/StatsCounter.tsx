@@ -68,10 +68,15 @@ function CounterItem({ value, label }: CounterItemProps) {
 
   const formatCount = () => {
     const numberMatch = value.match(/([\d.]+)/);
+
+    if (!numberMatch) {
+      return value;
+    }
+
     const suffixMatch = value.match(/([^\d.]+)/);
     const suffix = suffixMatch ? suffixMatch[0] : "";
 
-    if (numberMatch && numberMatch[0].includes(".")) {
+    if (numberMatch[0].includes(".")) {
       return count.toFixed(1) + suffix;
     }
 
@@ -80,10 +85,10 @@ function CounterItem({ value, label }: CounterItemProps) {
 
   return (
     <div ref={elementRef} className="flex flex-col items-center p-sm">
-      <div className="text-display-lg text-primary font-bold mb-xs min-w-[110px]">
+      <div className="text-display-lg text-primary text-xl font-bold mb-xs min-w-[110px]">
         {formatCount()}
       </div>
-      <div className="text-label-md font-semibold text-text-secondary uppercase tracking-wider">
+      <div className="text-label-md text-base font-medium text-text-secondary">
         {label}
       </div>
     </div>
