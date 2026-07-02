@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { HiArrowRight, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import IntroText from "./IntroText";
 import Slider from "react-slick";
@@ -194,11 +195,15 @@ export default function ImportExportProducts({
                 <div key={idx} className="pr-lg pb-md select-none outline-none h-full">
                   <div className="group h-full bg-surface-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col cursor-grab active:cursor-grabbing">
                     <div className="h-48 overflow-hidden bg-surface-low relative">
-                      <img
-                        alt={product.alt}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
-                        src={product.image}
-                      />
+                      {product.image && (
+                        <Image
+                          alt={product.alt}
+                          className="object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+                          src={product.image}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      )}
                       {product.category && (
                         <div className="absolute top-sm right-sm bg-surface/90 backdrop-blur text-primary text-xs font-semibold px-2 py-1 rounded shadow-sm pointer-events-none">
                           {product.category}

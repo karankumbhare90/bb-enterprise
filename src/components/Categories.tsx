@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { HiArrowRight, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import IntroText from "./IntroText";
 
@@ -75,8 +76,8 @@ export default function Categories({
         return <ul style={{ margin: "0px" }}>{dotsArray}</ul>;
       }
       const activeIndex = dotsArray.findIndex((dot: any) => {
-        return dot.props?.className?.includes("slick-active") || 
-               dot.props?.children?.props?.className?.includes("slick-active-custom");
+        return dot.props?.className?.includes("slick-active") ||
+          dot.props?.children?.props?.className?.includes("slick-active-custom");
       });
       const safeActiveIndex = activeIndex >= 0 ? activeIndex : 0;
       let start = Math.max(0, safeActiveIndex - 2);
@@ -157,10 +158,12 @@ export default function Categories({
               <div key={idx} className="pr-lg pb-md select-none outline-none h-full">
                 <div className="group h-full bg-surface-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col cursor-grab active:cursor-grabbing">
                   <div className="h-48 overflow-hidden bg-surface-low relative">
-                    <img
+                    <Image
                       alt={category.alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
                       src={category.image}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </div>

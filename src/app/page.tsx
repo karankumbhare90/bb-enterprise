@@ -1,16 +1,17 @@
 import React from "react";
+import nextDynamic from "next/dynamic";
 import Hero from "../components/Hero";
 import StatsCounter from "../components/StatsCounter";
-import HowItWorks from "../components/HowItWorks";
+const HowItWorks = nextDynamic(() => import("../components/HowItWorks"));
 import IntroText from "../components/IntroText";
-import Categories from "../components/Categories";
-import Features from "../components/Features";
-import Gallery from "../components/Gallery";
-import OurTeam from "../components/OurTeam";
-import Faq from "../components/Faq";
-import ContactSection from "../components/ContactSection";
+const Categories = nextDynamic(() => import("../components/Categories"));
+const Features = nextDynamic(() => import("../components/Features"));
+const Gallery = nextDynamic(() => import("../components/Gallery"));
+const OurTeam = nextDynamic(() => import("../components/OurTeam"));
+const Faq = nextDynamic(() => import("../components/Faq"));
+const ContactSection = nextDynamic(() => import("../components/ContactSection"));
 import FeaturedProducts from "../components/FeaturedProducts";
-import ImportExportProducts from "../components/ImportExportProducts";
+const ImportExportProducts = nextDynamic(() => import("../components/ImportExportProducts"));
 
 import { connectDB } from "@/lib/db";
 import Category from "@/models/Category";

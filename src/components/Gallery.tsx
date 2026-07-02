@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Masonry from "react-masonry-css";
 import IntroText from "./IntroText";
 import { galleryData } from "../data/data";
@@ -60,12 +61,13 @@ export default function Gallery({
                   key={idx}
                   className={`w-full ${height} mb-md rounded-xl overflow-hidden border border-outline-variant/20 shadow-sm relative group`}
                 >
-                  <img
-                    alt={img.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-                    src={img.src}
-                    loading="lazy"
-                  />
+                    <Image
+                      alt={img.alt}
+                      className="object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
+                      src={img.src}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none flex items-end p-lg">
                     <span className="text-white font-semibold text-headline-sm tracking-tight">
                       {img.alt}

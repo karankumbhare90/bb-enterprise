@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { HiMenu, HiX } from "react-icons/hi";
 import { navigationData } from "../data/data";
 
@@ -35,10 +36,13 @@ export default function Navbar({ settings }: { settings?: any }) {
       <div className="container mx-auto px-gutter sm:px-0 flex justify-between items-center h-16">
         {/* Logo and Brand */}
         <a href="/" className="flex items-center gap-md group">
-          <img
+          <Image
             src={settings?.siteLogo || navigationData.logo.src}
             alt={settings?.title || navigationData.logo.alt}
-            className="h-10 w-10 rounded-md object-contain transition-transform duration-300 group-hover:scale-105"
+            width={40}
+            height={40}
+            className="rounded-md object-contain transition-transform duration-300 group-hover:scale-105"
+            priority
           />
           <span className="text-headline-sm lg:text-headline-md font-bold text-primary tracking-tight transition-colors duration-300 group-hover:text-primary/80">
             {settings?.title || navigationData.brandName}

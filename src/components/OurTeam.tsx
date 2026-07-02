@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { FaLinkedinIn, FaTwitter, FaEnvelope, FaInstagram } from "react-icons/fa";
 import IntroText from "./IntroText";
 import { teamData } from "../data/data";
@@ -26,10 +27,12 @@ export default function OurTeam() {
                 className="group relative overflow-hidden rounded-2xl bg-surface-low transition-shadow duration-300 cursor-pointer"
               >
                 <div className="aspect-[3/4] w-full relative">
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   {/* Gradient Overlay for better readability of text on hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0" />

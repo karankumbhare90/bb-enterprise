@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { HiArrowRight } from "react-icons/hi";
 import { heroData } from "../data/data";
 
@@ -39,10 +40,13 @@ export default function Hero() {
 
           {/* Hero Visual Image */}
           <div className="relative h-[320px] sm:h-[450px] lg:h-[550px] w-full rounded-2xl overflow-hidden shadow-lg border border-outline-variant/10">
-            <img
+            <Image
               alt={heroData.alt}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="object-cover transition-transform duration-700 hover:scale-105"
               src={heroData.image}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none" />
           </div>
