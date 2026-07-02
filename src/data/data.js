@@ -106,33 +106,58 @@ export const galleryData = {
   description: "A glimpse into our manufacturing partners, logistics hubs, and dedicated teams.",
   images: [
     {
-      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuByvrHF802Tk2rQYSsKo8mkxwtXTGKZxPCcHqbLeNrUwH8--A434Zz2-c3GbJixCR9QdbUVxe4hdW_niXyb9lk-t5Zqo0Jg4NqcZcigsbOtGeXNcLNgImQnRoRs7HF_8caSQmKRDl1tMoFuWSZzbsiUo3Gbu8CJribW6Q_aBY3WYI_81mmE0fx0EEMqqe8I6zsRFzgSk_iygJF8SRS6UsLFpF-9aGWU72BcLYvwFTunS3Ju1wG_6JaCEja1W-0tYuRH75Epnn97S4w",
-      alt: "Modern warehouse",
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922297/WhatsApp_Image_2026-07-01_at_6.38.32_PM_ssjybb.jpg",
+      alt: "Team",
       gridSpan: "md:col-span-2 lg:col-span-2 h-80",
     },
     {
-      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAx0b9zVoObGNjvgayo2xXi8-FRxVESGlIlIt7QuvsHi0j6f1n3x8fnWRUr1ZC7tDR7FuR_d1SJR9WXb0u14L7YMqeAjHKVhz5QT52hy_LufGzQIoNN62vOOIztLkSZNCav3AASvcNkqe4WDx5JPHEQKK2iitJp9YFSvP9mm9U-YMbgbnO8RFL6VjfidC596kiPVW96JaGC4WqEvJJnjrLQVkrjXQJ8Nvn27ZXzj6yvI6bQIsp4V4d-JNThOr0jpObCxN0Ex8XJcgM",
-      alt: "Manufacturing process",
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922299/WhatsApp_Image_2026-07-01_at_6.39.03_PM_fqtvrh.jpg",
+      alt: "Award Moment",
       gridSpan: "md:col-span-1 lg:col-span-1 h-80",
     },
     {
-      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAUx3LZZp9sM4l123PtelTIQW43Pq0h5fQs-qmX5j-ikU4mvOKDlYzxlcdN1bthHJ8i-0zGQxnwX_r16mXWCXPOVsA3M6lQMO_sQ8Kkcd2Liv0Nz5TvXO5B6ebiaTzZ1vc5x_e1PT2RsbMeW20r6zpCWZBNqQG0hQGxwBBUnUtnSrLe_qZm6qGnrWR2qDo_G64WzFqtXgUdinK-XGHVTHM84o-sWDrxf_7g5bf5aTKZZs4A40Fn_ZGQMrbWCeurSM7rJRm9gDdPGX4",
-      alt: "Shipping port",
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922303/WhatsApp_Image_2026-07-01_at_6.44.17_PM_hpxtla.jpg",
+      alt: "Mango",
       gridSpan: "md:col-span-1 lg:col-span-1 h-80",
     },
     {
-      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDyWJ5xJVzJ0DWYkMD8l6VBVHQsPlR8JEyg1sEA7ztvV77Sc6wwoRCdZTuw_5jr-2AfuGxhQ-sc0jHw52kO0W9Dopkva6m5OY0gVpmLjx6bLz2HgvaO3dXJGzRVcg3Uw57e43AYZeD3KiC1SWwd0a9rHTrboqVzwi-k7jbxzbPznSQU5WEfMc2P4rp1qyX4UEKHPghBRfObwXVIT_PZ4WuIWw9UyRWFsgk_fI9pxGccbi0-sNQLssfzO1YbOGwSpuxqjdnNxXhb1FI",
-      alt: "Quality inspection",
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922458/WhatsApp_Image_2026-07-01_at_6.45.02_PM_1_c5itdj.jpg",
+      alt: "Green Chilli",
       gridSpan: "md:col-span-1 lg:col-span-1 h-80",
     },
     {
-      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAU6trWeMou5u_vjK7oTd8fRd2aBIf_ufhTnZTsneZ2_N6V1Ky7FE8cBx_UY6SQbrxdEQb8FR3Fl7bGn4CATaa59EVz2gk_-_F0G8qU13aCpS9c_E99uUo4kH2qdHq4jZwbL9F7EqbKLHPR43Pl8MhjT4zYn8RrstYtOdooR00TJ7A8aolovc2WR2i1t9JWHnKpOTSJHmI447nLpV0m7vWgbI_o9krXPGsrUHGHGhoMAttDGfsS0VT4AlYq2bTj9VpF74eDhRQ9PvM",
-      alt: "Team meeting",
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922458/WhatsApp_Image_2026-07-01_at_6.45.02_PM_yharql.jpg",
+      alt: "Peanutes",
       gridSpan: "md:col-span-2 lg:col-span-2 h-80",
     },
     {
-      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCYUipMMERroa1LQ7nt6T6ij7rWvUGYyaJ3ee1lCUFW8Vc8uD-vocZN7tRCqdlC-an4y1tQ-veqoX0q7N66UJQErK0s686ZUxF3uU_7RGqSu799OAahdy1C_psRSne0p8e6g51zT3z-g5ztRRY9C4jDgJdD3M3TalF79MNc_HDGLX8hZ6pzLrgagWkLDHx-894LgLNTTxkN6o0Q1X7bOiLAhxH--M2OoYodEnttp2srFXecn7Med2tbGmZD5_SxFS_aOWD2KnRsiwo",
-      alt: "Logistics planning",
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922458/WhatsApp_Image_2026-07-01_at_6.45.08_PM_ai14ey.jpg",
+      alt: "Onion Samples",
+      gridSpan: "md:col-span-1 lg:col-span-1 h-80",
+    },
+    {
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922302/WhatsApp_Image_2026-07-01_at_6.44.10_PM_ajxw96.jpg",
+      alt: "Banana",
+      gridSpan: "md:col-span-1 lg:col-span-1 h-80",
+    },
+    {
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922302/WhatsApp_Image_2026-07-01_at_6.39.08_PM_ahu0ao.jpg",
+      alt: "Dragon Fruit",
+      gridSpan: "md:col-span-1 lg:col-span-1 h-80",
+    },
+    {
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922300/WhatsApp_Image_2026-07-01_at_6.39.05_PM_hfxwzk.jpg",
+      alt: "Shipment",
+      gridSpan: "md:col-span-1 lg:col-span-1 h-80",
+    },
+    {
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922298/WhatsApp_Image_2026-07-01_at_6.38.48_PM_ph1mvt.jpg",
+      alt: "Makhana",
+      gridSpan: "md:col-span-1 lg:col-span-1 h-80",
+    },
+    {
+      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922298/WhatsApp_Image_2026-07-01_at_6.38.53_PM_uejktl.jpg",
+      alt: "Red Chilli",
       gridSpan: "md:col-span-1 lg:col-span-1 h-80",
     },
   ],
@@ -231,13 +256,25 @@ export const teamData = {
       }
     },
     {
-      name: "Harsh Wardhan",
-      position: "CFO",
+      name: "Harshwardhan Sharma",
+      position: "Operations & Procurement Manager",
       image: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782736786/harshwardhan_dqkh9n.jpg",
       socials: {
         linkedin: "#",
         twitter: "#",
-        email: "harshwardhan3699@gmail.com"
+        email: "Harshwardhan3699@gmail.com",
+        instagram: "https://www.instagram.com/harshwardhan__bhatt?igsh=dXYxN2h1dG52ZW1h"
+      }
+    },
+    {
+      name: "Avantika Sharma",
+      position: "Finance & Administration",
+      image: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922272/WhatsApp_Image_2026-07-01_at_6.38.30_PM_sps3jn.jpg",
+      socials: {
+        linkedin: "#",
+        twitter: "#",
+        email: "sharmaavni687@gmail.com",
+        instagram: "https://www.instagram.com/avni_bhatt1101?igsh=MWpvZXY0N3NramN1eQ=="
       }
     }
   ]

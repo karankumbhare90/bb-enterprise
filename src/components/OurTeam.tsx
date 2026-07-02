@@ -1,5 +1,5 @@
 import React from "react";
-import { FaLinkedinIn, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaLinkedinIn, FaTwitter, FaEnvelope, FaInstagram } from "react-icons/fa";
 import IntroText from "./IntroText";
 import { teamData } from "../data/data";
 
@@ -19,7 +19,7 @@ export default function OurTeam() {
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl">
             {teamData.members.map((member, idx) => (
               <div
                 key={idx}
@@ -69,6 +69,15 @@ export default function OurTeam() {
                           aria-label="Email"
                         >
                           <FaEnvelope className="text-lg" />
+                        </a>
+                      )}
+                      {member.socials?.instagram && member.socials.instagram !== '#' && (
+                        <a
+                          href={member.socials.instagram}
+                          className="w-10 h-10 rounded-full bg-white/20 hover:bg-white backdrop-blur-sm flex items-center justify-center text-white hover:text-primary transition-all duration-300"
+                          aria-label="Instagram"
+                        >
+                          <FaInstagram className="text-lg" />
                         </a>
                       )}
                     </div>
