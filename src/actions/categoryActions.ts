@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 export async function getCategories() {
   try {
     await connectDB();
-    const categories = await Category.find().sort({ createdAt: -1 }).lean();
+    const categories = await Category.find().sort({ sortOrder: 1, createdAt: -1 }).lean();
     return JSON.parse(JSON.stringify(categories));
   } catch (error) {
     console.error("Failed to fetch categories:", error);

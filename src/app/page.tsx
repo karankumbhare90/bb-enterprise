@@ -24,7 +24,7 @@ export default async function Home() {
   await connectDB();
 
   // Fetch active categories
-  const categoriesDocs = await Category.find({ status: "Active" }).sort({ createdAt: -1 });
+  const categoriesDocs = await Category.find({ status: "Active" }).sort({ sortOrder: 1, createdAt: -1 });
   const categories = categoriesDocs.map(doc => ({
     _id: doc._id.toString(),
     title: doc.name,
@@ -38,12 +38,12 @@ export default async function Home() {
   const exportDocs = await Product.find({ status: "Active", $or: [{ tradeType: "Export" }, { tradeType: { $exists: false } }] })
     .populate("category", "name")
     .limit(20)
-    .sort({ createdAt: -1 });
+    .sort({ sortOrder: 1, createdAt: -1 });
 
   const importDocs = await Product.find({ status: "Active", tradeType: "Import" })
     .populate("category", "name")
     .limit(20)
-    .sort({ createdAt: -1 });
+    .sort({ sortOrder: 1, createdAt: -1 });
 
   const mapProductDoc = (prod: any) => ({
     id: prod._id.toString(),

@@ -75,7 +75,7 @@ export const howItWorksData = {
 };
 
 export const featuresData = {
-  title: "Why Choose ExportHub",
+  title: "Why Choose Us",
   description: "We manage the complexities of global trade with unmatched expertise and reliability.",
   items: [
     {
@@ -112,6 +112,11 @@ export const galleryData = {
     },
     {
       src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922299/WhatsApp_Image_2026-07-01_at_6.39.03_PM_fqtvrh.jpg",
+      alt: "Award Moment",
+      gridSpan: "md:col-span-1 lg:col-span-1 h-80",
+    },
+    {
+      src: "https://res.cloudinary.com/dnjo2uscy/image/upload/v1783104968/WhatsApp_Image_2026-07-03_at_10.41.37_PM_deszhj.jpg",
       alt: "Award Moment",
       gridSpan: "md:col-span-1 lg:col-span-1 h-80",
     },
@@ -246,13 +251,13 @@ export const teamData = {
   description: "Our dedicated team of industry veterans ensures seamless procurement, rigorous quality control, and unparalleled support for your global import operations.",
   members: [
     {
-      name: "Ritik Bhatia",
+      name: "Ritik Bhatt",
       position: "CEO",
       image: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782736786/ritik-bhatt_pzmks5.jpg",
       socials: {
         linkedin: "https://www.linkedin.com/in/ritikbhattbbenterprise?utm_source=share_via&utm_content=profile&utm_medium=member_android",
         twitter: "#",
-        email: "bbenterprise.global@gmail.com"
+        email: "ritikbhatt930@gmail.com"
       }
     },
     {
