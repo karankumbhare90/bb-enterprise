@@ -85,7 +85,7 @@
   }
 
   .inner-wrap {
-    @apply py-8 lg:py-16
+    @apply w-full py-8 lg:py-16
   }
 }
 
@@ -99,11 +99,13 @@
 .categories-slick-slider .slick-track {
   display: flex !important;
 }
+
 .categories-slick-slider .slick-slide {
   height: auto !important;
   display: flex !important;
 }
-.categories-slick-slider .slick-slide > div {
+
+.categories-slick-slider .slick-slide>div {
   height: 100% !important;
   width: 100% !important;
 }
