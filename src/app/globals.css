@@ -85,7 +85,7 @@
   }
 
   .inner-wrap {
-    @apply w-full py-8 lg:py-16
+    @apply !w-full py-8 lg:py-16;
   }
 }
 
