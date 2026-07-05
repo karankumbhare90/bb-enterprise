@@ -56,7 +56,7 @@ export default function FeaturedProducts({
     dots: true,
     infinite: false,
     speed: 400,
-    slidesToShow: 3.5,
+    slidesToShow: slidesToShow,
     slidesToScroll: 1,
     arrows: false,
     onInit: () => setIsSliderInit(true),
@@ -88,30 +88,7 @@ export default function FeaturedProducts({
         start = Math.max(0, end - 5);
       }
       return <ul style={{ margin: "0px" }}>{dotsArray.slice(start, end)}</ul>;
-    },
-    responsive: [
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 3.5,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2.4,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1.2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    }
   };
 
   const maxSlideIndex = Math.max(0, items.length - slidesToShow);
@@ -132,7 +109,7 @@ export default function FeaturedProducts({
             />
           </div>
           {/* Slider controls */}
-          <div className={`flex gap-sm shrink-0 mb-sm md:mb-0 transition-opacity duration-300 ${isSliderInit ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+          <div className={`hidden md:flex gap-sm shrink-0 mb-sm md:mb-0 transition-opacity duration-300 ${isSliderInit ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
             <button
               onClick={() => sliderRef.current?.slickPrev()}
               disabled={currentSlide === 0}
