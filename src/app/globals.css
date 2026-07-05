@@ -87,6 +87,10 @@
   .inner-wrap {
     @apply !w-full py-8 lg:py-16;
   }
+
+  .container {
+    @apply mx-auto;
+  }
 }
 
 /* Enable overflow visible on slick-list for categories slider to allow left margin bleed */
