@@ -10,8 +10,10 @@ import Product from "@/models/Product";
 import Category from "@/models/Category";
 import { notFound } from "next/navigation";
 
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export const dynamic = "force-dynamic";
+
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
   await connectDB();
 
@@ -20,9 +22,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   let product = null;
   try {
-    product = await Product.findById(id).populate("category").lean();
+    product = await Product.findOne({ slug }).populate("category").lean();
   } catch (e) {
-    // Likely an invalid ObjectId format
+    //
   }
 
   if (!product) {
@@ -34,8 +36,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   // Breadcrumbs
   const breadcrumbs = [
     { label: "Home", href: "/" },
-    { label: "Products", href: "#" },
-    { label: categoryName, href: "#" },
+    { label: categoryName, href: product.category?.slug ? `/collections/${product.category.slug}` : "/#category" },
     { label: product.name, href: "#" },
   ];
 
@@ -83,20 +84,36 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       {/* Breadcrumb & Header */}
       <div className="bg-surface-container-low border-b border-outline-variant py-md mb-lg">
         <div className="container mx-auto px-gutter sm:px-0">
-          <nav aria-label="Breadcrumb" className="flex text-body-sm font-body-sm text-on-surface-variant mb-sm overflow-x-auto whitespace-nowrap">
-            <ol className="inline-flex items-center space-x-1 md:space-x-2">
-              {breadcrumbs.map((crumb, idx) => (
-                <li key={idx} className="inline-flex items-center">
-                  {idx > 0 && <HiChevronRight className="text-sm mx-1" />}
-                  {idx === breadcrumbs.length - 1 ? (
-                    <span className="text-on-surface font-medium">{crumb.label}</span>
-                  ) : (
-                    <Link href={crumb.href} className="hover:text-primary transition-colors">
-                      {crumb.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
+          <nav aria-label="Breadcrumb" className="flex text-body-sm font-body-sm text-on-surface-variant mb-sm overflow-x-auto whitespace-nowrap w-full scrollbar-hide">
+            <ol className="inline-flex items-center space-x-1 md:space-x-2 w-full">
+              {breadcrumbs.map((crumb, idx) => {
+                const isFirst = idx === 0;
+                const isLast = idx === breadcrumbs.length - 1;
+                const isMiddle = !isFirst && !isLast;
+
+                return (
+                  <React.Fragment key={idx}>
+                    <li className={`inline-flex items-center ${isMiddle ? "hidden md:inline-flex" : ""}`}>
+                      {idx > 0 && <HiChevronRight className="text-sm mx-1 shrink-0" />}
+                      {isLast ? (
+                        <span className="text-on-surface font-medium truncate max-w-[150px] sm:max-w-[250px] md:max-w-none block" title={crumb.label}>
+                          {crumb.label}
+                        </span>
+                      ) : (
+                        <Link href={crumb.href} className="hover:text-primary transition-colors whitespace-nowrap">
+                          {crumb.label}
+                        </Link>
+                      )}
+                    </li>
+                    {isFirst && breadcrumbs.length > 2 && (
+                      <li className="inline-flex items-center md:hidden">
+                        <HiChevronRight className="text-sm mx-1 shrink-0" />
+                        <span className="text-on-surface-variant font-medium tracking-widest px-1">...</span>
+                      </li>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </ol>
           </nav>
         </div>

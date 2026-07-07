@@ -24,26 +24,28 @@ export default async function Home() {
   await connectDB();
 
   // Fetch active categories
-  const categoriesDocs = await Category.find({ status: "Active" }).sort({ sortOrder: 1, createdAt: -1 });
+  const categoriesDocs = await Category.find({ status: "Active" }).sort({ sortOrder: 1, createdAt: -1 }).lean();
   const categories = categoriesDocs.map(doc => ({
     _id: doc._id.toString(),
     title: doc.name,
     description: doc.description || `Explore our high-quality ${doc.name} globally sourced for wholesale.`,
     image: doc.image || "",
     alt: doc.name,
-    href: `#category-${doc._id}`,
+    href: `/collections/${doc.slug || doc._id}`,
   }));
 
   // Fetch Export and Import products
   const exportDocs = await Product.find({ status: "Active", $or: [{ tradeType: "Export" }, { tradeType: { $exists: false } }] })
     .populate("category", "name")
     .limit(20)
-    .sort({ sortOrder: 1, createdAt: -1 });
+    .sort({ sortOrder: 1, createdAt: -1 })
+    .lean();
 
   const importDocs = await Product.find({ status: "Active", tradeType: "Import" })
     .populate("category", "name")
     .limit(20)
-    .sort({ sortOrder: 1, createdAt: -1 });
+    .sort({ sortOrder: 1, createdAt: -1 })
+    .lean();
 
   const mapProductDoc = (prod: any) => ({
     id: prod._id.toString(),
@@ -53,7 +55,7 @@ export default async function Home() {
     price: `MOQ: ${prod.moq} ${prod.unit}`,
     image: prod.images?.[0]?.url || "",
     alt: prod.name,
-    href: `/product/${prod._id}`,
+    href: `/product/${prod.slug || prod._id}`,
   });
 
   const exportItems = exportDocs.map(mapProductDoc);

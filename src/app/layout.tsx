@@ -51,6 +51,7 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} h-full antialiased scroll-smooth scroll-pt-24`}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col">
         <Providers>

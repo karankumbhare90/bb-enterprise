@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { HiArrowRight, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import IntroText from "./IntroText";
 
@@ -24,7 +25,7 @@ interface CategoriesProps {
 }
 
 export default function Categories({
-  id = "products",
+  id = "collections",
   tagline = "Catalog Sourcing",
   title,
   description,
@@ -133,7 +134,7 @@ export default function Categories({
           <Slider ref={sliderRef} {...settings} className="categories-slick-slider pb-lg">
             {items.map((category, idx) => (
               <div key={idx} className="pr-lg pb-md select-none outline-none h-full">
-                <div className="group h-full bg-surface-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col cursor-grab active:cursor-grabbing">
+                <Link href={category.href} className="group h-full bg-surface-lowest border border-outline-variant/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col cursor-pointer active:cursor-pointer block">
                   <div className="h-48 overflow-hidden bg-surface-low relative">
                     <Image
                       alt={category.alt}
@@ -145,14 +146,17 @@ export default function Categories({
                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </div>
                   <div className="p-lg flex flex-col flex-grow gap-1">
-                    <h3 className="text-headline-sm mb-0 text-primary group-hover:text-primary/95">
-                      {category.title}
-                    </h3>
+                    <div className="flex items-center justify-between mb-0">
+                      <h3 className="text-headline-sm mb-0 text-primary group-hover:text-primary/95">
+                        {category.title}
+                      </h3>
+                      <HiArrowRight className="text-primary opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                    </div>
                     <p className="text-body-sm text-text-secondary flex-grow line-clamp-3">
                       {category.description}
                     </p>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </Slider>

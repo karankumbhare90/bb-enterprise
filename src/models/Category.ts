@@ -7,6 +7,11 @@ const CategorySchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    slug: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
     description: {
       type: String,
     },
@@ -38,6 +43,17 @@ const CategorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+CategorySchema.pre("save", function (next) {
+  if (!this.slug && this.name) {
+    this.slug = this.name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  }
+  next();
+});
+
+delete mongoose.models.Category;
 const Category = mongoose.models.Category || mongoose.model("Category", CategorySchema);
 
 export default Category;
