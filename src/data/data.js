@@ -106,11 +106,6 @@ export const galleryData = {
   description: "A glimpse into our manufacturing partners, logistics hubs, and dedicated teams.",
   images: [
     {
-      src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922297/WhatsApp_Image_2026-07-01_at_6.38.32_PM_ssjybb.jpg",
-      alt: "Team",
-      gridSpan: "md:col-span-2 lg:col-span-2 h-80",
-    },
-    {
       src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922299/WhatsApp_Image_2026-07-01_at_6.39.03_PM_fqtvrh.jpg",
       alt: "Award Moment",
       gridSpan: "md:col-span-1 lg:col-span-1 h-80",
@@ -132,7 +127,7 @@ export const galleryData = {
     },
     {
       src: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782922458/WhatsApp_Image_2026-07-01_at_6.45.02_PM_yharql.jpg",
-      alt: "Peanutes",
+      alt: "Beans",
       gridSpan: "md:col-span-2 lg:col-span-2 h-80",
     },
     {
