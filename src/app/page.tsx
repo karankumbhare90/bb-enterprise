@@ -12,6 +12,7 @@ const Faq = nextDynamic(() => import("../components/Faq"));
 const ContactSection = nextDynamic(() => import("../components/ContactSection"));
 import FeaturedProducts from "../components/FeaturedProducts";
 const ImportExportProducts = nextDynamic(() => import("../components/ImportExportProducts"));
+const Awards = nextDynamic(() => import("../components/Awards"));
 
 import { connectDB } from "@/lib/db";
 import Category from "@/models/Category";
@@ -91,9 +92,11 @@ export default async function Home() {
 
         <Features />
 
+
         <Gallery />
 
         <OurTeam />
+        <Awards items={settingsObj?.awards || []} />
 
         <Faq />
 

@@ -22,6 +22,7 @@ export async function middleware(request: NextRequest) {
     try {
       // Verify token
       await jwtVerify(token, key);
+      console.log("[Middleware] Token valid, allowing request to", pathname);
       return NextResponse.next({
         request: {
           headers: requestHeaders,

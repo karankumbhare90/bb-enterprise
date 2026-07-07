@@ -49,6 +49,12 @@ const SettingSchema = new mongoose.Schema(
         icon: { type: String, required: true },
       },
     ],
+    awards: [
+      {
+        heading: { type: String, required: true },
+        description: { type: String, required: false },
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -47,6 +47,16 @@ export async function PUT(request: Request) {
       console.warn("Failed to parse socialIcons");
     }
 
+    let awards = [];
+    try {
+      const awardsStr = formData.get("awards") as string;
+      if (awardsStr) {
+        awards = JSON.parse(awardsStr);
+      }
+    } catch (e) {
+      console.warn("Failed to parse awards");
+    }
+
     let setting = await Setting.findOne();
     if (!setting) {
       setting = await Setting.create({});
@@ -75,6 +85,7 @@ export async function PUT(request: Request) {
     setting.contactAddress = contactAddress ?? setting.contactAddress;
     setting.googleMapLink = googleMapLink ?? setting.googleMapLink;
     setting.socialIcons = socialIcons;
+    setting.awards = awards;
     setting.siteLogo = siteLogo;
     setting.cloudinaryId = cloudinaryId;
 

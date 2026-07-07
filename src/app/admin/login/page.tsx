@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
         toast.error(res.error);
       } else if (res.success) {
         toast.success(res.success);
-        router.push("/admin/products");
+        window.location.href = "/admin/products";
       }
     });
   };

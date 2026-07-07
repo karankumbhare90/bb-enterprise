@@ -36,7 +36,7 @@ const ICON_OPTIONS = [
 
 export default function AdminSettingsPage() {
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<"general" | "users">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "users" | "awards">("general");
 
   // --- General Settings State ---
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -52,6 +52,7 @@ export default function AdminSettingsPage() {
   const [contactAddress, setContactAddress] = useState("");
   const [googleMapLink, setGoogleMapLink] = useState("");
   const [socialIcons, setSocialIcons] = useState<{ platform: string; url: string; icon: string }[]>([]);
+  const [awards, setAwards] = useState<{ heading: string; description: string }[]>([]);
 
   // --- User Management State ---
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -82,6 +83,7 @@ export default function AdminSettingsPage() {
       setContactAddress(s.contactAddress || "");
       setGoogleMapLink(s.googleMapLink || "");
       setSocialIcons(s.socialIcons || []);
+      setAwards(s.awards || []);
       if (s.siteLogo) setPreviewImage(s.siteLogo);
     }
   }, [settingsResponse]);
@@ -110,6 +112,7 @@ export default function AdminSettingsPage() {
       formData.append("contactAddress", contactAddress);
       formData.append("googleMapLink", googleMapLink);
       formData.append("socialIcons", JSON.stringify(socialIcons));
+      formData.append("awards", JSON.stringify(awards));
       if (newLogo) {
         formData.append("siteLogo", newLogo);
       }
@@ -216,6 +219,20 @@ export default function AdminSettingsPage() {
     return found ? found.component : MdEmail;
   };
 
+  const handleAddAward = () => {
+    setAwards([...awards, { heading: "", description: "" }]);
+  };
+
+  const handleAwardChange = (index: number, field: string, value: string) => {
+    const updated = [...awards];
+    updated[index] = { ...updated[index], [field]: value };
+    setAwards(updated);
+  };
+
+  const handleRemoveAward = (index: number) => {
+    setAwards(awards.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="p-4 md:p-2xl max-w-9xl mx-auto w-full">
       <div className="mb-xl">
@@ -238,6 +255,13 @@ export default function AdminSettingsPage() {
         >
           <MdPeople className="text-[20px]" />
           User Management
+        </button>
+        <button
+          onClick={() => setActiveTab("awards")}
+          className={`px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "awards" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
+        >
+          <MdAdd className="text-[20px]" />
+          Awards
         </button>
       </div>
 
@@ -524,6 +548,74 @@ export default function AdminSettingsPage() {
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* Tab Content: Awards */}
+      {activeTab === "awards" && (
+        <div className="bg-surface border border-outline-variant/40 rounded-xl p-lg shadow-sm">
+          <div className="flex justify-between items-center mb-md">
+            <div>
+              <h3 className="font-headline-sm text-primary">Awards & Recognitions</h3>
+              <p className="text-sm text-secondary">Manage the awards displayed on your site.</p>
+            </div>
+            <button
+              onClick={handleAddAward}
+              className="px-4 py-2 bg-primary text-white rounded-lg font-label-md hover:bg-primary/90 transition-colors flex items-center gap-2"
+            >
+              <MdAdd /> Add Award
+            </button>
+          </div>
+
+          {awards.length === 0 ? (
+            <div className="text-center py-8 text-secondary border-2 border-dashed border-outline-variant rounded-xl">
+              <p>No awards added yet. Click "Add Award" to get started.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
+              {awards.map((award, index) => (
+                <div key={index} className="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-md flex flex-col gap-4 relative shadow-sm">
+                  <button
+                    onClick={() => handleRemoveAward(index)}
+                    className="absolute top-2 right-2 p-2 text-secondary hover:text-error hover:bg-error/10 rounded-md transition-colors"
+                    title="Remove Award"
+                  >
+                    <MdDelete className="text-[20px]" />
+                  </button>
+                  <div className="flex flex-col gap-2 pt-4">
+                    <label className="font-label-md text-on-surface">Award Heading</label>
+                    <input
+                      type="text"
+                      value={award.heading}
+                      onChange={e => handleAwardChange(index, "heading", e.target.value)}
+                      placeholder="e.g. Best Enterprise Software 2026"
+                      className="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:outline-none focus:border-primary transition-all"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-label-md text-on-surface">Description</label>
+                    <textarea
+                      rows={3}
+                      value={award.description}
+                      onChange={e => handleAwardChange(index, "description", e.target.value)}
+                      placeholder="Short description of the award..."
+                      className="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:outline-none focus:border-primary transition-all resize-none"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex justify-end mt-lg pt-md border-t border-outline-variant/30">
+            <button
+              onClick={() => saveSettingsMutation.mutate()}
+              disabled={saveSettingsMutation.isPending}
+              className="px-8 py-3 bg-primary text-white rounded-lg font-label-md hover:bg-primary/90 transition-colors shadow-sm disabled:opacity-50"
+            >
+              {saveSettingsMutation.isPending ? "Saving..." : "Save Settings"}
+            </button>
           </div>
         </div>
       )}
