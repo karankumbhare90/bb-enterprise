@@ -80,7 +80,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         <div className="mb-12">
           <h1 className="text-display-sm text-primary mb-4">{category.name}</h1>
           {category.description && (
-            <p className="text-body-lg text-text-secondary max-w-3xl">
+            <p className="text-body-lg text-text-secondary w-full">
               {category.description}
             </p>
           )}
