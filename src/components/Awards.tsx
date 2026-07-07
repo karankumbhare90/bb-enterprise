@@ -1,6 +1,6 @@
 import React from "react";
 import IntroText from "./IntroText";
-import { MdEmojiEvents } from "react-icons/md";
+import { MdEmojiEvents, MdOutlineDone } from "react-icons/md";
 
 export interface AwardItem {
   heading: string;
@@ -37,16 +37,21 @@ export default function Awards({
           {items.map((award, idx) => (
             <div
               key={idx}
-              className="group bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm hover:shadow-level-2 hover:border-primary/30 transition-all duration-300 flex flex-col  relative overflow-hidden p-5 text-left"
+              className="group bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm hover:shadow-level-2 hover:border-primary/30 transition-all duration-300 relative overflow-hidden p-5 text-left flex items-center justify-start gap-4"
             >
-              <h3 className="font-headline-sm text-headline-sm text-primary mb-0 z-10">
-                {award.heading}
-              </h3>
-              {award.description && (
-                <p className="font-body-md text-text-secondary leading-relaxed z-10 mt-2">
-                  {award.description}
-                </p>
-              )}
+              <div className="flex-shrink-0 text-xl">
+                <MdOutlineDone />
+              </div>
+              <div className="flex flex-col items-start justify-start">
+                <h3 className="font-headline-sm text-headline-sm text-primary mb-0 z-10">
+                  {award.heading}
+                </h3>
+                {award.description && (
+                  <p className="font-body-md text-text-secondary leading-relaxed z-10 mt-2">
+                    {award.description}
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>
