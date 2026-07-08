@@ -59,7 +59,7 @@ export async function DELETE(
   } catch (error) {
     console.error("DELETE User Error:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to delete user" },
+      { success: false, error: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

@@ -108,12 +108,12 @@ export default function AdminLoginPage() {
                   Remember me
                 </span>
               </label>
-              <a
+              {/* <a
                 className="font-label-md text-label-md text-primary hover:text-on-tertiary-container transition-colors duration-200"
                 href="#"
               >
                 Forgot Password?
-              </a>
+              </a> */}
             </div>
 
             {/* Submit Button */}
@@ -127,7 +127,7 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Toggle Link */}
+          {/* Toggle Link
           <div className="mt-lg text-center border-t border-outline-variant/30 pt-md">
             <p className="font-body-sm text-body-sm text-secondary">
               Need an admin account?{" "}
@@ -135,7 +135,7 @@ export default function AdminLoginPage() {
                 Register here
               </Link>
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Footer link */}

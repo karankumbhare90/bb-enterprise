@@ -49,7 +49,7 @@ export async function registerUser(prevState: any, formData: FormData) {
     });
 
     // Create JWT containing the sessionId
-    const token = await new SignJWT({ userId: newUser._id, sessionId, role: newUser.role })
+    const token = await new SignJWT({ userId: newUser._id.toString(), sessionId, role: newUser.role })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setExpirationTime("24h")
@@ -103,7 +103,7 @@ export async function loginUser(prevState: any, formData: FormData) {
     });
 
     // Create JWT containing the sessionId
-    const token = await new SignJWT({ userId: user._id, sessionId, role: user.role })
+    const token = await new SignJWT({ userId: user._id.toString(), sessionId, role: user.role })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setExpirationTime("24h")

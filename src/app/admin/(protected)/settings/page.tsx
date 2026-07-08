@@ -241,24 +241,24 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-outline-variant mb-lg">
+      <div className="flex border-b border-outline-variant mb-lg overflow-x-auto flex-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <button
           onClick={() => setActiveTab("general")}
-          className={`px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "general" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
+          className={`shrink-0 whitespace-nowrap px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "general" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
         >
           <MdSettings className="text-[20px]" />
           General Settings
         </button>
         <button
           onClick={() => setActiveTab("users")}
-          className={`px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "users" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
+          className={`shrink-0 whitespace-nowrap px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "users" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
         >
           <MdPeople className="text-[20px]" />
           User Management
         </button>
         <button
           onClick={() => setActiveTab("awards")}
-          className={`px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "awards" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
+          className={`shrink-0 whitespace-nowrap px-6 py-3 font-label-md flex items-center gap-2 border-b-2 transition-colors ${activeTab === "awards" ? "border-primary text-primary" : "border-transparent text-secondary hover:text-on-surface"}`}
         >
           <MdAdd className="text-[20px]" />
           Awards
