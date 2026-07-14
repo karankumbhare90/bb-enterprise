@@ -18,6 +18,13 @@ import { connectDB } from "@/lib/db";
 import Category from "@/models/Category";
 import Product from "@/models/Product";
 import Setting from "@/models/Setting";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export const dynamic = "force-dynamic";
 

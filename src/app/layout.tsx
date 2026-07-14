@@ -17,13 +17,20 @@ const inter = Inter({
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const metadataBase = new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://www.bbenterpriseglobal.com");
+  const verification = {
+    google: "-HLnXXqX-unt-W0bl1XkB9r9oV7aV2q6j_DTMHASjQA",
+  };
+  
   try {
     await connectDB();
     const setting = await Setting.findOne();
     if (setting) {
       return {
+        metadataBase,
         title: setting.metaTitle || setting.title || "Premium Global Trade Sourcing Hub",
         description: setting.metaDescription || "High-trust B2B sourcing and export environment.",
+        verification,
       };
     }
   } catch (error) {
@@ -32,8 +39,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   // Fallback metadata
   return {
+    metadataBase,
     title: "Premium Global Trade Sourcing Hub",
     description: "High-trust B2B sourcing and export environment.",
+    verification,
   };
 }
 

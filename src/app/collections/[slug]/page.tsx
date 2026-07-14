@@ -6,6 +6,16 @@ import { connectDB } from "@/lib/db";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  return {
+    alternates: {
+      canonical: `/collections/${slug}`,
+    },
+  };
+}
 
 export const dynamic = "force-dynamic";
 
