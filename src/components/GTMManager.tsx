@@ -37,8 +37,8 @@ export default function GTMManager({ gtmId, gaId }: { gtmId?: string; gaId?: str
         document.head.appendChild(gtagScript);
 
         // Create the inline config script
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer.push(arguments);}
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        function gtag(){(window as any).dataLayer.push(arguments);}
         // @ts-ignore
         gtag('js', new Date());
         // @ts-ignore
