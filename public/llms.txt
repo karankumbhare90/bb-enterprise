@@ -1,0 +1,16 @@
+# BB Enterprise Global
+
+> High-trust B2B sourcing and export environment. Premium Global Trade Sourcing Hub.
+
+This site is a B2B platform connecting global buyers with verified export and import products.
+
+## Sections
+
+- [Home](https://www.bbenterpriseglobal.com/) - Main landing page with featured categories and products
+- [Collections](https://www.bbenterpriseglobal.com/#collections) - Product categories
+- [Products](https://www.bbenterpriseglobal.com/#import-export-products) - All active import and export items
+
+## Notes
+
+- This is a Next.js App Router application.
+- All product and category data is dynamically generated.

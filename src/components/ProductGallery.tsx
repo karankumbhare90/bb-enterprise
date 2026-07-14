@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { HiOutlineSearchCircle, HiOutlinePlay } from "react-icons/hi";
 
 interface ProductGalleryProps {
@@ -13,10 +14,13 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
   return (
     <div className="lg:col-span-7 flex flex-col gap-sm">
       <div className="bg-surface rounded-xl border border-outline-variant overflow-hidden aspect-[4/3] relative group shadow-sm flex items-center justify-center">
-        <img
+        <Image
           alt="Product Main View"
-          className="w-full h-full object-cover transition-opacity duration-300"
+          className="object-cover transition-opacity duration-300"
           src={images[activeImage]}
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 50vw"
         />
 
       </div>
@@ -25,16 +29,18 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
           <div
             key={idx}
             onClick={() => setActiveImage(idx)}
-            className={`bg-surface rounded-lg overflow-hidden aspect-square cursor-pointer transition-all ${
+            className={`bg-surface rounded-lg overflow-hidden aspect-square cursor-pointer transition-all relative ${
               activeImage === idx
                 ? "border-2 border-primary opacity-100"
                 : "border border-outline-variant opacity-70 hover:opacity-100"
             }`}
           >
-            <img
+            <Image
               alt={`Thumbnail ${idx + 1}`}
-              className="w-full h-full object-cover"
+              className="object-cover"
               src={imgSrc}
+              fill
+              sizes="20vw"
             />
           </div>
         ))}

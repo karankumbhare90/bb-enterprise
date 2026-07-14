@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { HiGlobe, HiShare } from "react-icons/hi";
 import { footerData, navigationData } from "../data/data";
 import { MdEmail } from "react-icons/md";
@@ -68,10 +69,12 @@ export default function Footer({ settings }: { settings?: any }) {
             {/* Logo, text, social links */}
             <div className="col-span-1 flex flex-col gap-md">
               <a href="#" className="flex items-center gap-md">
-                <img
+                <Image
                   src={settings?.siteLogo || navigationData.logo.src}
                   alt={settings?.title || navigationData.logo.alt}
-                  className="h-10 w-10 rounded-md object-contain"
+                  className="rounded-md object-contain"
+                  width={40}
+                  height={40}
                 />
                 <span className="text-headline-sm font-bold text-primary tracking-tight">
                   {settings?.title || navigationData.brandName}
