@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import LayoutWrapper from "../components/LayoutWrapper";
 import Providers from "../components/Providers";
+import GTMManager from "../components/GTMManager";
 import { Toaster } from "react-hot-toast";
 import { connectDB } from "@/lib/db";
 import Setting from "@/models/Setting";
@@ -64,15 +65,15 @@ export default async function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col">
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-BD8E3E1SKM" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-BD8E3E1SKM');
-          `}
-        </Script>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WFVXJXC5"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        <GTMManager gtmId="GTM-WFVXJXC5" gaId="G-BD8E3E1SKM" />
         <Providers>
           <LayoutWrapper settings={settings}>
             {children}
