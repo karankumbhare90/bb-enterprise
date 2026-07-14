@@ -182,3 +182,12 @@
   background-color: #0f172a;
   /* brand navy */
 }
+
+/* Fix react-slick accessibility: hide interactive elements in hidden slides from keyboard/screen-readers */
+.slick-slide[aria-hidden="true"] a,
+.slick-slide[aria-hidden="true"] button,
+.slick-slide[aria-hidden="true"] input,
+.slick-slide[aria-hidden="true"] select,
+.slick-slide[aria-hidden="true"] textarea {
+  visibility: hidden;
+}

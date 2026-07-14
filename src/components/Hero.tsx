@@ -46,6 +46,7 @@ export default function Hero() {
               src={heroData.image}
               fill
               priority
+              fetchPriority="high"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none" />
