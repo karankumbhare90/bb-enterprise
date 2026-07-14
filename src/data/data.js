@@ -247,7 +247,7 @@ export const teamData = {
   members: [
     {
       name: "Ritik Bhatt",
-      position: "Founder",
+      position: "Founder & Managing Partner",
       image: "https://res.cloudinary.com/dh16djqyh/image/upload/v1782736786/ritik-bhatt_pzmks5.jpg",
       socials: {
         linkedin: "https://www.linkedin.com/in/ritikbhattbbenterprise?utm_source=share_via&utm_content=profile&utm_medium=member_android",
