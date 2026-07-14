@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bb-enterprise-ten.vercel.app/'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://bb-enterprise-ten.vercel.app'
 
   return [
     {
@@ -11,13 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/product`,
+      url: `${baseUrl}product`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/collections`,
+      url: `${baseUrl}collections`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
